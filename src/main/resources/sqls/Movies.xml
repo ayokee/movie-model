@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dome">
+
+	<select id="findAllMovieForIndex" parameterType="Map"
+		resultType="com.mayiit.movie.model.Movie">
+		select
+		id,title,
+		images
+		from mayiit.movie where 1=1 and
+		subtype=${subtype}
+		<if test="limitMin != null and limitMax !=null">
+			limit #{limitMin},#{limitMax} ;
+		</if>
+	</select>
+
+	<select id="findAllTVForIndex" parameterType="Map"
+		resultType="com.mayiit.movie.model.Movie">
+		select 
+		id,title,
+		images
+		from mayiit.movie where 1=1 and
+		subtype=${subtype}
+		<if test="limitMin != null and limitMax !=null">
+			limit #{limitMin},#{limitMax} ;
+		</if>
+	</select>
+
+	<select id="findMovieDetailById" parameterType="Map"
+		resultType="com.mayiit.movie.model.Movie">
+		select 
+		id,title,original_title as
+		originalTitle,aka,images,subtype,directors,casts,writers,pubdates,years,languages,durations,genres,countries,summary,
+		seasons_count as seasonsCount,current_season as currentSeason
+		,episodes_count as episodesCount,photos
+		from mayiit.movie where 1=1 and id=#{id} ;
+	</select>
+</mapper>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dome">
+	<select id="findMemberCount" parameterType="com.mayiit.movie.model.Member"
+		resultType="int">
+		select count(*) from mayiit.member;
+	</select>
+	<select id="findNameById" parameterType="int"
+		resultType="String">
+		select nickname from mayiit.member where mid=#{mid};
+	</select>
+	<select id="findMemberAll" parameterType="Map"
+		resultType="com.mayiit.movie.model.Member">
+		select
+		mid,username as userName,password as
+		passWord,nickname as nickName,createtime as createTime,state from
+		mayiit.member order by mid ${limit};
+	</select>
+	<!-- <delete id="deleteMovie" parameterType="int"> delete from mayiit.movie 
+		where id=#{id}; </delete> -->
+	<update id="doUpdateMember" parameterType="com.mayiit.movie.model.Member">
+		update mayiit.member
+		set
+		state=#{state} where mid=#{mid};
+	</update>
+
+</mapper>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dome">
+	<select id="selectUser" parameterType="hashmap"
+		resultType="com.mayiit.movie.model.Admin">
+		select username as userName,password as passWord,nickname
+		as nickName,last_login_time as lastLoginTime,create_time as
+		createTime,super_admin as superAdmin from mayiit.admin where username
+		= #{username} and password =
+		#{password};
+	</select>
+	<select id="findCount" parameterType="com.mayiit.movie.model.Admin"
+		resultType="int">
+		select count(*) from mayiit.admin;
+	</select>
+
+	<select id="findAll" parameterType="Map"
+		resultType="com.mayiit.movie.model.Admin">
+		select username as userName,password as passWord,nickname
+		as nickName,last_login_time as lastLoginTime,create_time as
+		createTime,super_admin as superAdmin from mayiit.admin order by id
+		desc ${limit};
+	</select>
+
+
+	<insert id="doCreate" parameterType="com.mayiit.movie.model.Admin">
+		insert into
+		mayiit.admin(username,password,nickname,create_time,last_login_time,super_admin)
+		values
+		(#{userName},#{passWord},#{nickName},#{createTime},#{lastLoginTime},#{superAdmin})
+		ON
+		DUPLICATE
+		KEY UPDATE
+		password=values(password);
+	</insert>
+
+	<update id="doUpLast" parameterType="Map">
+		update mayiit.admin set
+		last_login_time =#{lastTime} where username = #{userName};
+	</update>
+
+	<update id="initdb" parameterType="Map">
+		${sql}
+	</update>
+</mapper>
